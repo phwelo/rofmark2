@@ -1,27 +1,38 @@
-# WLED Bookmark Manager
+# Bookmark Manager with Rofi
 
-This project is a Python-based tool for managing WLED bookmarks across different Firefox profiles. It leverages the [open-url-in-container](https://github.com/honsiorovskyi/open-url-in-container) Firefox extension to open URLs in specific Firefox containers. Bookmarks are defined in a JSON file and accessed via a Rofi menu with container-based handling.
+This project is a Python-based tool that allows you to manage and open bookmarks in specific Firefox container profiles, using Rofi as a selection menu. The script supports configurable profiles, bookmark tracking, and the option to perform web searches for unmatched entries.
+
+## Features
+
+- **Bookmark Management**: Define bookmarks in a JSON file, organized by profiles.
+- **Rofi Menu Interface**: Choose bookmarks or perform a web search through a customizable Rofi menu.
+- **Firefox Container Support**: Open URLs in specific Firefox containers using the [open-url-in-container](https://github.com/honsiorovskyi/open-url-in-container) extension.
+- **Selection Tracking**: Track and update the number of times each bookmark is selected.
+- **Configurable Options**: Customize settings via `config.ini` for flexibility.
 
 ## Prerequisites
 
 ### 1. Firefox (modern version)
-Ensure you have a recent version of Firefox installed, as this script depends on container features introduced in newer versions.
+Ensure you have a recent version of Firefox with container support.
 
 ### 2. [open-url-in-container Extension](https://github.com/honsiorovskyi/open-url-in-container)
-This Firefox extension allows URLs to be opened directly in specified Firefox containers. Install this extension and configure containers to match the profiles defined in your configuration.
+This Firefox extension allows URLs to be opened directly in specified Firefox containers. Install and configure containers to match your defined profiles.
 
-### 3. Python 3.x
-This script is written in Python 3 and requires several Python libraries.
+### 3. Rofi
+Rofi is required for displaying the interactive menu to select bookmarks. Install Rofi if not already available.
 
-### 4. Rofi
-Rofi is required for displaying the interactive menu to select bookmarks. Make sure Rofi is installed if you plan to use this feature.
+### 4. Python 3.x
+The script requires Python 3 with the following libraries:
+```bash
+pip install configparser
+```
 
 ## Installation
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/wled_scanner.git
-   cd wled_scanner
+   git clone https://github.com/yourusername/bookmark_manager.git
+   cd bookmark_manager
    ```
 
 2. **Install Required Python Libraries**:
@@ -29,12 +40,12 @@ Rofi is required for displaying the interactive menu to select bookmarks. Make s
    pip install configparser
    ```
 
-3. **Download and Configure `config.ini`**:
-   Customize `config.ini` in the same directory as the script, following the example below.
+3. **Configure `config.ini`**:
+   Customize `config.ini` in the same directory as the script. Use the template below to define settings and profiles.
 
 ## Configuration
 
-The `config.ini` file allows for easy customization of settings, including the bookmarks file path, Firefox executable, Rofi theme, and available profiles. Place this file in the same directory as the script.
+The `config.ini` file allows easy customization of paths, profiles, and options.
 
 ### Example `config.ini`
 
@@ -43,34 +54,44 @@ The `config.ini` file allows for easy customization of settings, including the b
 BOOKMARKS_FILE = /home/yourusername/bookmarks/bookmarks.json
 FIREFOX_EXECUTABLE = firefox
 THEME_PATH = /home/yourusername/.config/rofi/launchers/type-6/style-ph.rasi
+SEARCH_URL = https://www.google.com/search?q=
+DEFAULT_SEARCH_PROFILE = Personal
+DEFAULT_GOOGLE_URL = https://google.com
+ROFI_CASE_INSENSITIVE = true
+ROFI_MATCHING_MODE = fuzzy
 
 [Profiles]
-PROFILES = Personal, Work, Admin, Research
+PROFILES = Personal, Work, Research
 ```
 
 - **BOOKMARKS_FILE**: Path to the JSON file containing your bookmarks.
 - **FIREFOX_EXECUTABLE**: Path or name of the Firefox executable.
 - **THEME_PATH**: Rofi theme file path.
-- **PROFILES**: Comma-separated list of container profile names to match your Firefox container setup.
+- **SEARCH_URL**: Base URL for web searches.
+- **DEFAULT_SEARCH_PROFILE**: Profile to use by default when searching the web.
+- **DEFAULT_GOOGLE_URL**: URL for the default Google search option.
+- **ROFI_CASE_INSENSITIVE**: Enables case-insensitive matching.
+- **ROFI_MATCHING_MODE**: Sets Rofi matching mode (`fuzzy`, `regex`, etc.).
+- **PROFILES**: Comma-separated list of container profiles matching Firefox container names.
 
 ## Usage
 
-1. **Prepare Bookmarks File**:
-   Ensure that `bookmarks.json` exists and contains your bookmarks in the following format:
+1. **Define Bookmarks in JSON**:
+   Create a `bookmarks.json` file containing your bookmarks. Here’s an example structure:
 
    ```json
    [
        {
-           "Display Name": "Example Bookmark",
-           "URL": "https://example.com",
+           "Display Name": "Email",
+           "URL": "https://mail.google.com",
            "Profile": "Personal",
            "Count": 0
        },
        {
-           "Display Name": "Another Bookmark",
-           "URL": "https://anotherexample.com",
+           "Display Name": "Project Management",
+           "URL": "https://projectmanagement.com",
            "Profile": "Work",
-           "Count": 1
+           "Count": 0
        }
    ]
    ```
@@ -80,31 +101,26 @@ PROFILES = Personal, Work, Admin, Research
    ./bookmark_manager.py
    ```
 
-3. **Select a Bookmark or Default Option**:
-   The script will display a Rofi menu listing bookmarks and a default option for Google in each profile. Select an option to open it in the associated Firefox container.
+3. **Select Bookmark or Search Option**:
+   The Rofi menu will display available bookmarks and a default search option. Selecting a bookmark will open it in the specified Firefox container profile, and the `Count` will increment in the JSON file. If no bookmark matches, a web search will be performed using the query entered.
 
-### Using with Rofi
-
-- The script generates a menu via Rofi with a specified theme. You can modify the theme by updating the `THEME_PATH` setting in `config.ini`.
-- The menu supports fuzzy matching and is case-insensitive for convenience.
-
-## Example JSON Structure
+### Example JSON Structure
 
 An example `bookmarks.json` file might look like this:
 
 ```json
 [
     {
-        "Display Name": "Email",
-        "URL": "https://mail.google.com",
+        "Display Name": "Calendar",
+        "URL": "https://calendar.google.com",
         "Profile": "Personal",
-        "Count": 0
+        "Count": 1
     },
     {
-        "Display Name": "Project Management",
-        "URL": "https://project.management.com",
+        "Display Name": "Docs",
+        "URL": "https://docs.example.com",
         "Profile": "Work",
-        "Count": 1
+        "Count": 0
     }
 ]
 ```
@@ -112,13 +128,13 @@ An example `bookmarks.json` file might look like this:
 ## Troubleshooting
 
 1. **Firefox Profile Not Found**:
-   Make sure that the profiles in `config.ini` match the containers configured in your Firefox extension.
+   Ensure profiles in `config.ini` match those defined in the Firefox extension.
 
 2. **Missing `config.ini` or `bookmarks.json`**:
-   Ensure both `config.ini` and `bookmarks.json` are in place and correctly referenced in your configuration.
+   Ensure both `config.ini` and `bookmarks.json` are in place and correctly referenced.
 
 3. **Rofi Not Installed**:
-   Rofi is required for this script to function. Make sure it is installed.
+   Rofi is required. Install Rofi to use the menu selection feature.
 
 ## License
 
