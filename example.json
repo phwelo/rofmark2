@@ -1,0 +1,98 @@
+[
+    {
+        "Display Name": "Webmail",
+        "URL": "https://mail.example.com",
+        "Profile": "Personal",
+        "Count": 0
+    },
+    {
+        "Display Name": "Cloud Console",
+        "URL": "https://cloud.console.example.com",
+        "Profile": "Admin",
+        "Count": 1
+    },
+    {
+        "Display Name": "Version Control",
+        "URL": "https://git.example.com/projects",
+        "Profile": "Contract",
+        "Count": 0
+    },
+    {
+        "Display Name": "Office Webmail",
+        "URL": "https://office365.example.com",
+        "Profile": "Corporate",
+        "Count": 0
+    },
+    {
+        "Display Name": "Collaboration Tool",
+        "URL": "https://teams.example.com",
+        "Profile": "Corporate",
+        "Count": 0
+    },
+    {
+        "Display Name": "Project Tracking",
+        "URL": "https://projecttrack.example.com/boards/123",
+        "Profile": "Contract",
+        "Count": 0
+    },
+    {
+        "Display Name": "Knowledge Base",
+        "URL": "https://kb.example.com/wiki",
+        "Profile": "Contract",
+        "Count": 0
+    },
+    {
+        "Display Name": "App Analytics",
+        "URL": "https://analytics.example.com",
+        "Profile": "Admin",
+        "Count": 0
+    },
+    {
+        "Display Name": "Cloud Resource Manager",
+        "URL": "https://cloud.console.example.com/resource-manager",
+        "Profile": "Admin",
+        "Count": 0
+    },
+    {
+        "Display Name": "Calendar",
+        "URL": "https://calendar.example.com",
+        "Profile": "Personal",
+        "Count": 0
+    },
+    {
+        "Display Name": "Cloud IAM",
+        "URL": "https://cloud.console.example.com/iam",
+        "Profile": "Corporate",
+        "Count": 0
+    },
+    {
+        "Display Name": "User Groups",
+        "URL": "https://groups.example.com",
+        "Profile": "Admin",
+        "Count": 0
+    },
+    {
+        "Display Name": "Shopping Site",
+        "URL": "https://shop.example.com",
+        "Profile": "Personal",
+        "Count": 0
+    },
+    {
+        "Display Name": "Privacy Search",
+        "URL": "https://search.example.com",
+        "Profile": "Personal",
+        "Count": 0
+    },
+    {
+        "Display Name": "Gaming Platform",
+        "URL": "https://games.example.com",
+        "Profile": "Personal",
+        "Count": 0
+    },
+    {
+        "Display Name": "Infra-Cloud-Analytics",
+        "URL": "https://git.example.com/infra/cloud-analytics",
+        "Profile": "Contract",
+        "Count": 0
+    }
+]
